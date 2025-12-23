@@ -1,0 +1,7 @@
+A          R EMPREC
+A            EMPID        6P 0       TEXT('Employee ID')
+A            EMPNAME     30A         TEXT('Employee Name')
+A            TEAM        10A
+A            ROLE        15A
+A            STATUS       1A
+A            LEAVEBAL     3P 0
