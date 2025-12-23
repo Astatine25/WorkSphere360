@@ -1,0 +1,6 @@
+A          R LEAVEFMT
+A                                      CF03(03 'Exit')
+A            EMPID         6Y 0B  5 10
+A            FROMDATE      L     7 10
+A            TODATE        L     9 10
+A            MSG          40A   12 10
