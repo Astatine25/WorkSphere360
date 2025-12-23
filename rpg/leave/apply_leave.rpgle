@@ -1,18 +1,21 @@
-**free
-Dcl-F LEAVES Usage(*Update:*Output);
-Dcl-F LEAVEBAL Usage(*Update);
+**FREE
+ctl-opt dftactgrp(*no) actgrp('WS360');
 
-Dcl-Pi *N;
-   pEmpId  Packed(5);
-   pStart  Date;
-   pEnd    Date;
-End-Pi;
+dcl-f LEAVE usage(*update) keyed;
 
-Chain pEmpId LEAVEBAL;
-If %Found();
-   If USEDLEAVE + (%Diff(pEnd:pStart)+1) <= TOTALLEAVE;
-      Write LEAVEREC;
-   Else;
-      Dsply 'Insufficient Leave Balance';
-   EndIf;
-EndIf;
+dcl-pi *n;
+  empId packed(6);
+  fromDate date;
+  toDate date;
+end-pi;
+
+if toDate < fromDate;
+   dsply 'Invalid date range';
+   return;
+endif;
+
+write LEAVEREC;
+commit;
+
+dsply 'Leave Applied Successfully';
+
