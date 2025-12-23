@@ -1,0 +1,7 @@
+     A          R LEAVEREC
+     A            LEAVEID      7P 0
+     A            EMPID        5P 0
+     A            STARTDATE    L
+     A            ENDDATE      L
+     A            LEAVETYPE    10A
+     A            STATUS       1A
