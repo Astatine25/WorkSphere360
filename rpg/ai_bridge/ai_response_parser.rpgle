@@ -1,10 +1,10 @@
-**free
-Dcl-S Risk Char(10);
-Dcl-S Prob Packed(5:2);
+**FREE
+dcl-s approvalProb packed(3:2);
 
-/* Parse JSON response */
-Risk = 'LOW';
-Prob = 0.85;
+approvalProb = 0.85;
 
-Dsply ('AI Risk: ' + Risk);
-Dsply ('Approval Probability: ' + %Char(Prob));
+if approvalProb > 0.75;
+   dsply 'AI Recommendation: APPROVE';
+else;
+   dsply 'AI Recommendation: REVIEW';
+endif;
