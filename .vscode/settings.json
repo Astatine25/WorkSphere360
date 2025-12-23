@@ -1,0 +1,7 @@
+{
+  "ibmi.libraryList": ["WORK360", "QGPL", "QTEMP"],
+  "ibmi.connectionSettings": {
+    "enableSQL": true
+  },
+  "files.eol": "\n"
+}
