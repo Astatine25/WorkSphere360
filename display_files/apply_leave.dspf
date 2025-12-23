@@ -1,0 +1,5 @@
+     A          R APPLY
+     A            EMPID        5Y 0B  5 10
+     A            STARTDATE    DY 10B 7 10
+     A            ENDDATE      DY 10B 9 10
+     A            CONFIRM      1A   B 11 10
