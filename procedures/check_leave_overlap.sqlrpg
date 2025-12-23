@@ -1,0 +1,7 @@
+**free
+Exec SQL
+Select Count(*)
+Into :OverlapCount
+From LEAVES
+Where :Start <= ENDDATE
+And :End >= STARTDATE;
