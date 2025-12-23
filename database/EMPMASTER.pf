@@ -1,0 +1,7 @@
+     A          R EMPREC
+     A            EMPID        5P 0       COLHDG('Employee ID')
+     A            EMPNAME     30A         COLHDG('Employee Name')
+     A            TEAM        20A
+     A            ROLE        20A
+     A            MANAGERID    5P 0
+     A            STATUS       1A          COLHDG('A/I')
