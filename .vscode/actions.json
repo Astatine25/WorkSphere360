@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "actions": [
+    {
+      "name": "Compile RPGLE",
+      "command": "CRTBNDRPG PGM(WORK360/&FILENAME) SRCSTMF('&PATH')"
+    },
+    {
+      "name": "Compile SQLRPGLE",
+      "command": "CRTSQLRPGI OBJ(WORK360/&FILENAME) SRCSTMF('&PATH') COMMIT(*NONE)"
+    },
+    {
+      "name": "Compile DSPF",
+      "command": "CRTDSPF FILE(WORK360/&FILENAME) SRCSTMF('&PATH')"
+    }
+  ]
+}
