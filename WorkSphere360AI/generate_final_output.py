@@ -35,7 +35,7 @@ from ai_recommendations import generate_ai_actions
 # --------------------------------------------------
 # FILE PATHS
 # --------------------------------------------------
-INPUT_FILE = BASE_DIR / "leave_data.csv"
+INPUT_FILE = BASE_DIR / "WorkSphere360AI/leave_data.csv"
 OUTPUT_FILE = BASE_DIR / "final_ai_output.csv"
 
 # --------------------------------------------------
