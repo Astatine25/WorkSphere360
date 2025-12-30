@@ -36,4 +36,3 @@ def train_xgboost(df):
     print(f"Model AUC: {auc:.3f}")
 
     return model
-V
