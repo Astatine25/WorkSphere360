@@ -28,7 +28,7 @@ import pandas as pd
 # --------------------------------------------------
 # PROJECT MODULES
 # --------------------------------------------------
-from feature_engineering import compute_features
+from features import compute_features
 from model_xgboost import train_xgboost
 from ai_recommendations import generate_ai_actions
 
