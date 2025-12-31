@@ -4,6 +4,8 @@ from features import compute_features
 from model_xgboost import train_xgboost
 from ai_recommendations import add_ai_recommendations
 from department_alerts import generate_department_alerts
+from email_alerts import send_hr_alerts, send_manager_alerts
+from leave_optimizer import apply_leave_optimizer
 
 
 def main():
