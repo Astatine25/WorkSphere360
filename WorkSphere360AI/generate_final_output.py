@@ -2,6 +2,9 @@
 import pandas as pd
 from features import compute_features
 from model_xgboost import train_xgboost
+from ai_recommendations import add_ai_recommendations
+from department_alerts import generate_department_alerts
+
 
 def main():
     print("Loading leave data...")
