@@ -1,6 +1,6 @@
 # generate_final_output.py
 import pandas as pd
-from feature_engineering import compute_features
+from features import compute_features
 from model_xgboost import train_xgboost
 
 def main():
