@@ -1,22 +1,28 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="WorkSphere360 – AI Leave Intelligence", layout="wide")
+st.set_page_config(
+    page_title="WorkSphere360 – AI Leave Intelligence",
+    layout="wide"
+)
 
 st.title(" WorkSphere360 – AI Leave Management Dashboard")
 
-# -----------------------------
+# ======================================================
 # Load Data
-# -----------------------------
+# ======================================================
 @st.cache_data
 def load_data():
-    return pd.read_csv("final_ai_output.csv")
+    return (
+        pd.read_csv("final_ai_output.csv"),
+        pd.read_csv("hr_executive_summaries.csv")
+    )
 
-df = load_data()
+df, summaries = load_data()
 
-# -----------------------------
-# KPI Row
-# -----------------------------
+# ======================================================
+# KPI Metrics
+# ======================================================
 col1, col2, col3, col4 = st.columns(4)
 
 col1.metric("Employees", len(df))
@@ -26,24 +32,24 @@ col4.metric("Peak Season %", round(df["Is_Peak_Season"].mean() * 100, 2))
 
 st.divider()
 
-# -----------------------------
+# ======================================================
 # Department Alerts
-# -----------------------------
-st.subheader(" Departmental Alerts")
+# ======================================================
+st.subheader(" Departmental Risk Alerts")
 
 for dept, g in df.groupby("Department"):
     risk = (g["Burnout_Score"] > 0.75).mean()
     if risk > 0.3:
-        st.error(f"{dept}: Burnout risk at {round(risk*100,1)}%")
+        st.error(f"{dept}: High burnout risk ({round(risk*100,1)}%)")
     else:
         st.success(f"{dept}: Capacity stable")
 
 st.divider()
 
-# -----------------------------
-# Employee AI Decisions
-# -----------------------------
-st.subheader("👤 Employee-Level AI Decisions")
+# ======================================================
+# Employee-Level AI Decisions
+# ======================================================
+st.subheader("👤 Employee AI Leave Decisions")
 
 st.dataframe(
     df[[
@@ -60,24 +66,32 @@ st.dataframe(
 
 st.divider()
 
-# -----------------------------
+# ======================================================
 # Burnout Visualization
-# -----------------------------
-st.subheader(" Burnout Distribution")
+# ======================================================
+st.subheader(" Burnout Risk by Department")
+st.bar_chart(df.groupby("Department")["Burnout_Score"].mean())
 
-st.bar_chart(
-    df.groupby("Department")["Burnout_Score"].mean()
-)
+st.divider()
 
-# -----------------------------
-# Email Alert Placeholder
-# -----------------------------
-st.subheader(" Auto-Email Alerts (Preview)")
+# ======================================================
+# HR Executive Summaries (LLM Output)
+# ======================================================
+st.subheader(" AI-Generated HR Executive Summaries")
+
+for _, row in summaries.iterrows():
+    with st.expander(f" {row['Department']}"):
+        st.write(row["HR_Summary"])
+
+st.divider()
+
+# ======================================================
+# Email Alert Preview
+# ======================================================
+st.subheader(" Auto-Email Alert Preview")
 
 critical = df[df["Burnout_Score"] > 0.85]
 if not critical.empty:
     st.warning(f"{len(critical)} employees require immediate HR outreach.")
 else:
-    st.success("No critical alerts today.")
-
-st.caption("Email sending handled by enterprise SMTP / IBM i job queue.")
+    st.success("No critical alerts detected today.")
