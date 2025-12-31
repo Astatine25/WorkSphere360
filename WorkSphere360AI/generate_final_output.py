@@ -1,91 +1,40 @@
-"""
-WorkSphere360 – AI Leave Management System
-Generate Final AI Output for Dashboard
-
-This script:
-1. Loads leave_data.csv
-2. Performs feature engineering
-3. Trains XGBoost / RF model
-4. Predicts burnout probability
-5. Generates AI recommendations
-6. Saves final_ai_output.csv
-"""
-
-# --------------------------------------------------
-# PATH & IMPORT SAFETY (DO NOT REMOVE)
-# --------------------------------------------------
-import sys
-from pathlib import Path
-
-BASE_DIR = Path(__file__).parent
-sys.path.append(str(BASE_DIR))
-
-# --------------------------------------------------
-# STANDARD IMPORTS
-# --------------------------------------------------
+# generate_final_output.py
 import pandas as pd
-
-# --------------------------------------------------
-# PROJECT MODULES
-# --------------------------------------------------
-from features import compute_features
+from feature_engineering import compute_features
 from model_xgboost import train_xgboost
-from ai_recommendations import generate_ai_actions
 
-# --------------------------------------------------
-# FILE PATHS
-# --------------------------------------------------
-INPUT_FILE = BASE_DIR / "leave_data.csv"
-OUTPUT_FILE = BASE_DIR / "final_ai_output.csv"
-
-# --------------------------------------------------
-# MAIN PIPELINE
-# --------------------------------------------------
 def main():
     print("Loading leave data...")
-    df = pd.read_csv(INPUT_FILE)
+    df = pd.read_csv("leave_data.csv")
 
     print("Running feature engineering...")
-    df_features = compute_features(df)
-
-    # Deduplicate to employee level for ML
-    ml_df = (
-        df_features
-        .groupby("Employee_ID", as_index=False)
-        .last()
-    )
+    df_feat = compute_features(df)
 
     print("Training ML model (Burnout Prediction)...")
-    model = train_xgboost(ml_df)
+    model = train_xgboost(df_feat)
 
-    FEATURE_COLS = [
-        "Tenure",
-        "Bradford_Factor",
-        "Overtime_Hours_Last_30_Days",
-        "Days_Since_Last_Vacation",
-        "Average_Productivity_Score",
-        "Burnout_Risk_Score"
+    feature_cols = [
+        "Tenure_Yrs",
+        "Total_Days",
+        "Is_Peak_Season",
+        "Avg_Productivity",
+        "Overtime_Hours",
+        "Project_Risk_Score",
+        "Disruption_Score"
     ]
 
-    print("Predicting burnout probability...")
-    ml_df["Burnout_Probability"] = model.predict_proba(
-        ml_df[FEATURE_COLS]
+    df_feat["Burnout_Probability"] = model.predict_proba(
+        df_feat[feature_cols]
     )[:, 1]
 
-    print("Generating AI recommendations...")
-    ml_df["AI_Recommendation"] = ml_df.apply(
-        generate_ai_actions,
-        axis=1
+    df_feat["Risk_Level"] = pd.cut(
+        df_feat["Burnout_Probability"],
+        bins=[0, 0.4, 0.7, 1.0],
+        labels=["Low", "Medium", "High"]
     )
 
-    print("Saving final AI output...")
-    ml_df.to_csv(OUTPUT_FILE, index=False)
+    df_feat.to_csv("final_ai_output.csv", index=False)
+    print(" SUCCESS: final_ai_output.csv generated")
 
-    print("SUCCESS!")
-    print(f"Output generated: {OUTPUT_FILE}")
-
-# --------------------------------------------------
-# ENTRY POINT
-# --------------------------------------------------
 if __name__ == "__main__":
     main()
