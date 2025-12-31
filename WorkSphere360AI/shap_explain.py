@@ -1,7 +1,8 @@
+# shap_explain.py
 import shap
+import pandas as pd
 
-def explain_model(model, X_sample):
-    explainer = shap.Explainer(model)
-    shap_values = explainer(X_sample)
-
+def compute_shap_values(model, X_sample):
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(X_sample)
     return shap_values
