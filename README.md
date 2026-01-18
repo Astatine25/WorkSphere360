@@ -1,64 +1,59 @@
-# 🤖 AI-Powered Employee Leave Management System (RPGLE + AI)
+# Leave Management System
 
-An enterprise-grade **Employee Leave Management System** built on  
-**IBM i (AS/400)** using **RPG IV (ILE RPG)** and **DB2**, enhanced with a
-**multi-agent AI decision support layer** for intelligent leave planning,
-conflict detection, and workload optimization.
+Leave Management project is a .NET Core web application. When developing this application, it has used the following techniques.
 
-This project modernizes a legacy HR system by **overlaying AI intelligence**
-without replacing existing IBM i infrastructure.
+- Connect to a Database using Entity Framework Core
+- Use Repository and Unit Of Work Patterns and Dependency Injection
+- Use the MVC (Models, Views, and Controllers) Pattern
+- Apply C# and .Net Core Web Syntax
+- Use user Authentication using ASP.NET Core Identity
+- Use Models, ViewModels and AutoMapper
+- Use Bootstrap to style and manipulate the overall layout
+- Manage Packages with NuGet Manager
 
----
+## To Configure For Local Use
 
-## 📌 Key Features
+- Clone Repository To Local Computer
+- Open Project in Visual Studio
+- Edit "DefaultConnection" to point to the preferred database
+- Open Package Console Manager and run the command "Update-Database"
+- When completed, Run Website in Visual Studio to seed the default Admin User
+- Login as admin user using: Username: admin@localhost.com | Password: Password1234!
+- Create some leave types, if already not created, and before applying for leave make sure leave-allocated from admin.
 
-### 👩‍💼 Employee
-- Apply leave & comp-off
-- View leave balance and status
-- Get AI-recommended best leave dates
+## Design Diagram
+### Entity–relationship Diagram model
+![ER diagram](https://user-images.githubusercontent.com/39452187/125213694-fe275e80-e2d0-11eb-8360-4352812eb95d.JPG)
 
-### 👨‍💼 Manager
-- Approve / reject leave
-- View team availability
-- AI-based risk score & workload impact
-- Suggested alternative leave dates
+### Database diagram
+![Database diagram](https://user-images.githubusercontent.com/39452187/125213706-0a132080-e2d1-11eb-9753-331d23a47df0.png)
 
-### 🛠 Admin
-- Employee & role management
-- Holiday calendar maintenance
-- System configuration
+## Overview
+In many companies, Employee Leave Management systems can sometimes be taken into account retrospectively. Some use a paper-based system. Others mark the day in their calendars if they do so at all. This practice grows many issues, especially when asked from the employee’s point of view.
 
-### 🤖 AI Capabilities
-- Leave conflict detection
-- Team availability calculation
-- Approval probability prediction
-- Workload & burnout risk analysis
-- Explainable recommendations
+This system has the following features.
+- Ability to apply for leave at any time of the day
+- Employees can find out how many leaves are left
+- It is easy to know whether his leave application was accepted or rejected
+- The admin can easily find out how many leaves have been applied for
+- The ability for the admin to allocate the leaves for all employees at once
+- The admin can change the amount of leave of the employee
 
----
+## Sample Videos:
+### Admin View
+![Admin View](https://user-images.githubusercontent.com/39452187/126055054-d4e7598a-6a9a-4377-a82e-5cfa725c111f.gif)
 
-## 🧠 System Architecture
 
-The system follows a **hybrid architecture**:
+### Employee View
+![User View](https://user-images.githubusercontent.com/39452187/126055062-255e3c29-a987-43c7-b3c5-638a2946f0e4.gif)
 
-- **Core System:** IBM i (RPGLE + DB2)
-- **AI Layer:** External AI Agent (Python / ML / LLM)
-- **Integration:** REST-based AI Bridge
+## Packages
 
----
-
-## 🏗 High-Level Architecture Diagram
-
-```mermaid
-flowchart LR
-    EmployeeUI --> RPGApp
-    ManagerUI --> RPGApp
-    AdminUI --> RPGApp
-
-    RPGApp --> DB2[(DB2 Physical Files)]
-    RPGApp --> AIBridge
-
-    AIBridge --> AIEngine
-    AIEngine --> AIBridge
-
-    DB2 --> AIEngine
+- AutoMapper
+- automapper.extensions.microsoft.dependencyinjection
+- microsoft.aspnetcore.diagnostics.entityframeworkcore
+- microsoft.aspnetcore.identity.entityframeworkcore
+- microsoft.aspnetcore.identity.UI
+- microsoft.entityframeworkcore.sqlserver
+- microsoft.entityframeworkcore.tools
+- microsoft.visualstudio.web.codegeneration.design
